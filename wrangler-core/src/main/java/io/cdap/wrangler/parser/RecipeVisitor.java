@@ -66,13 +66,17 @@ import java.util.Map;
 public final class RecipeVisitor extends DirectivesBaseVisitor<RecipeSymbol.Builder> {
   private RecipeSymbol.Builder builder = new RecipeSymbol.Builder();
 
-  /**
-   * Returns a <code>RecipeSymbol</code> for the recipe being parsed. This
-   * object has all the tokens that were successfully parsed along with source
-   * information for each directive in the recipe.
-   *
-   * @return An compiled object after parsing the recipe.
-   */
+  @Override
+public Token visitByteSizeArg(DirectivesParser.ByteSizeArgContext ctx) {
+  return new ByteSize(ctx.getText());
+}
+
+@Override
+public Token visitTimeDurationArg(DirectivesParser.TimeDurationArgContext ctx) {
+  return new TimeDuration(ctx.getText());
+}
+
+  
   public RecipeSymbol getCompiledUnit() {
     return builder.build();
   }
